@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        'use strict';
+        //crea un programa que pida el limite inferior y limite superior de un intervalo
+        //si el limite inferior es mayor que el superior intercambiar los valores
+        //a continuacíon se iran pidiendo num enteros positivos hasta recibir numeros negativos
+        //al terminar se mostrara la siguiente informacion : de los entrados, cuantos estan dentro del intervalo
+        //mostrar si se ha introducido algun numero igual a alguno de los limites
+        function pedirEntero(mensaje) {
+            let resultado;
+           
+            do {
+                resultado = prompt(mensaje);
+                resultado = resultado.trim
+                if (resultado === "" ||  (!Number(resultado) &&  resultado != 0 )) {
+                    resultado = NaN 
+                    mensaje = "Valor incorrecto, porfavor introduce un valor entero" + mensaje                
+                }
+            } while (isNaN(Number(resultado)));
+            
+            
+            return Number(resultado);
+        }
+        var resultado1
+
+        function pedirEntero2(mensaje,resultado1) {
+            let resultado;
+            do {
+                resultado = prompt(mensaje);
+                resultado = resultado.trim
+                if (resultado === "" || (!Number(resultado) &&  resultado != 0) || resultado < resultado1) {
+                    resultado = NaN 
+                    mensaje = "Valor incorrecto, porfavor introduce un valor entero2" + mensaje                
+                }
+                console.log(!Number(resultado))
+            } while (isNaN(Number(resultado)) || resultado < resultado1);
+            return Number(resultado);
+        }
+
+
+        console.log(resultado1 = pedirEntero("introduce un numero entero:"));
+        console.log(pedirEntero2("introduce un numero entero:", resultado1));
+    </script>
+</body>
+</html>
