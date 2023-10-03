@@ -13,15 +13,16 @@
         //a continuacíon se iran pidiendo num enteros positivos hasta recibir numeros negativos
         //al terminar se mostrara la siguiente informacion : de los entrados, cuantos estan dentro del intervalo
         //mostrar si se ha introducido algun numero igual a alguno de los limites
+        //
         function pedirEntero(mensaje) {
-            let resultado;
+            let resultado,conespacios;
            
             do {
-                resultado = prompt(mensaje);
-                resultado = resultado.trim
-                if (resultado === "" ||  (!Number(resultado) &&  resultado != 0 )) {
+                conespacios = prompt(mensaje);
+                resultado = conespacios.trim();
+                if (resultado === "" ||  !Number(resultado) &&  resultado != 0 ) {
                     resultado = NaN 
-                    mensaje = "Valor incorrecto, porfavor introduce un valor entero" + mensaje                
+                    mensaje = "Valor incorrecto, porfavor introduce un valor entero" //+ mensaje                
                 }
             } while (isNaN(Number(resultado)));
             
@@ -31,22 +32,41 @@
         var resultado1
 
         function pedirEntero2(mensaje,resultado1) {
-            let resultado;
+            let resultado,conespacios;
             do {
-                resultado = prompt(mensaje);
-                resultado = resultado.trim
+                conespacios = prompt(mensaje);
+                resultado = conespacios.trim();
                 if (resultado === "" || (!Number(resultado) &&  resultado != 0) || resultado < resultado1) {
                     resultado = NaN 
-                    mensaje = "Valor incorrecto, porfavor introduce un valor entero2" + mensaje                
+                    mensaje = "Valor incorrecto, porfavor introduce un valor entero2" //+ mensaje                
                 }
-                console.log(!Number(resultado))
             } while (isNaN(Number(resultado)) || resultado < resultado1);
             return Number(resultado);
         }
 
+        function pedirNumerosHastaNegativo(liminf,limsup) {
+            let numero,dentrolimite=0,iguallimite=0;
+            do {
+                numero = prompt("introduce un numeroS positivoS, para parar introduce uno negativo:(INTERVALO "+liminf+"-"+")");
+                if (numero > liminf && numero < limsup) {
+                    dentrolimite++;
+                }
+                if (numero == liminf || numero == limsup) {
+                    iguallimite++;
+                }
+            } while (numero >= 0);
+            console.log("numeros dentro de limite: "+dentrolimite);
+            console.log("numeros iguales al limite: "+iguallimite);
+        }
+        let liminf,limsup;
+        liminf = pedirEntero("lim1");
+        limsup = pedirEntero2("lim2",liminf);
+        console.log("limite inferior:"+liminf);
+        console.log("limite superior:"+limsup);
 
-        console.log(resultado1 = pedirEntero("introduce un numero entero:"));
-        console.log(pedirEntero2("introduce un numero entero:", resultado1));
+        pedirNumerosHastaNegativo(liminf,limsup)
+
+
     </script>
 </body>
 </html>
