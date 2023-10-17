@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        /*Escribir una funcion que divida un array en grupos de un tamaño determinado
+        y los devuelva en un array bidimensional
+        */
+
+        // ["a","b","c","d"] 2 --> [["a","b"],["c","d"]]
+        // [0,1,2,3,4,5] 3 --> [[0,1,2],[3,4,5]]
+        // [0,1,2,3,4,5] 2 --> [[0,1],[2,3],[4,5]]
+
+        array=[0,1,2,3,4,5];
+        array1=[],array2=[];
+        x=0,z=0;
+        for(i in array){
+            if (i <= 2 ) {
+                array1[x]= array[i];
+                x++;
+            }
+            if (i > 2){
+                array2[z]= array[i];
+                z++;
+            }
+        }
+        console.log(array);
+        console.log(array1);
+        console.log(array2);
+
+
+    </script>
+</body>
+</html>

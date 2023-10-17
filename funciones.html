@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        a = [3,4,7,8,10,45, -1,3];
+       b = a.forEach(function(v,p,a) {
+        document.write(v+'<br/>');
+        return v;
+            
+        });
+
+        //map para devolver el array con aspecto modificado pero realmente los valores no estan modificados
+        b = a.map(function(v,p,a) {
+        return v-p;
+            
+        });
+
+        // un for para recorrer el array
+        // for(i=0; i<a.length;i++){
+        //     console.log(a[i]);
+        // }
+
+        // reduce para devolver un valor acumulativo
+        // b = a.reduce(function(acc, v, p , a){
+        //     return acc+v;
+        // },100)
+
+        //reduce para devolver un array con alguna modificacion como valores * 2
+        b = a.reduce(function(acc, v, p , a){
+           acc[p] = v*2;
+            return acc;
+        },[])
+
+
+    </script>
+</body>
+</html>

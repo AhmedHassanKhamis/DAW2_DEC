@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        cadenas = ["HOLA","aloh"]
+        function mismasletras(cadenas){
+            //
+            var cadena0=cadenas[0].toLowerCase();
+            var cadena1=cadenas[1].toLowerCase();
+            var lastiene = true;
+
+            for (i = 0; i < cadena1.length; i++) {
+                if (cadena0.includes(cadena1[i])) {
+                    lastiene = true
+                }else{
+                    lastiene = false
+                }
+            }
+
+            return lastiene;
+        }
+        
+        if (mismasletras(cadenas) == true) {
+            console.log("se encuentran las mismas letras");
+
+        } else {
+            console.log("no se encuentran las mismas letras");
+        }
+    </script>
+</body>
+</html>
