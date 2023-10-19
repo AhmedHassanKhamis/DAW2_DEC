@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var cadena = prompt("introduce una cadena:");
+        function invertirCadena(cadena) {
+            var resultado = "";
+            for (let index = cadena.length - 1; index >= 0; index--) {
+                resultado = resultado + cadena[index];
+            }
+            return resultado;
+        }
+
+        alert(invertirCadena(cadena));
+
+
+
+    </script>
+</body>
+</html>

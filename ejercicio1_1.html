@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function generarArray() {
+            var elementos = Math.floor(Math.random() * 100);
+            conjunto = new Array(elementos);
+            for (let i = 0; i < conjunto.length; i++) {
+                conjunto[i] = Math.floor(elementos + (elementos*2 - elementos +1) * Math.random());
+            }
+            return conjunto;
+        }
+
+
+        function igualesProductos(conjunto) {
+            var p=1,impar=1;
+            for (let index = 0; index < conjunto.length; index++) {
+                if (index % 2 == 0 && index != 0) {
+                    p = p * conjunto[index];
+                }else{
+                    impar = impar * conjunto[index];
+                }
+                
+            }
+            document.write("par: "+ p);
+            document.write("<br>");
+            document.write("impar: "+ impar);
+            document.write("<br>");
+
+            if(p == impar){
+                return "son iguales los productos";
+            }
+            else{
+                return "no son iguales pendejo";
+            }
+        }
+
+        aleatorio = generarArray();
+
+        document.write(aleatorio);
+        document.write("<br>");
+        document.write(igualesProductos(aleatorio));
+
+    </script>
+</body>
+</html>
