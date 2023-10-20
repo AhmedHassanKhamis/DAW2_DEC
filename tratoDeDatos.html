@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nombre de bebes</title>
+    <script src="nomnac21.js"></script>
+</head>
+<body>
+    <script>
+        function limpiar(dato){return dato.trim()};
+        function noVacios(dato) {return dato != ""};
+        const datos = nombres
+                            .split('\n')
+                            .map(limpiar)
+                            .filter(noVacios)
+                            .map(dato => dato.split(";;"));
+
+        const ninios = datos
+                        .map(dato => dato[0].split(';'));
+        
+        const ninias = datos
+                        .map(dato => dato[1].split(';').filter(noVacios));
+        
+
+
+        const losNombres = ninios 
+    </script>
+</body>
+</html>
