@@ -60,15 +60,15 @@
 
          //ret: Número
         function cuantasVecesApareceLaLetra(arr, letra){
-            var i = 0;
-            arr.forEach(dato =>{
-                if (dato.includes(letra)) {
-                    i++;
-                }
-            })
-            return i;
+        var resultado = 0,veces = 0;
+        arr.forEach(dato =>{
+           if (dato.includes(letra) == true) {
+            veces = dato.match('/'+letra+'/g',"").length;
+            resultado += veces;
+           }
+        })
+        return resultado;
         }
-
 
 
     </script>
