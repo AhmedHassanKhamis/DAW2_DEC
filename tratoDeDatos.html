@@ -23,8 +23,54 @@
                         .map(dato => dato[1].split(';').filter(noVacios));
         
 
+        const losNombres = ninios.map(dato => dato[0])
+                            .concat(ninias.map(dato => dato[0]));
 
-        const losNombres = ninios 
+       
+        // ret:numero
+        function cuantosNombresTienenLaLetra(arr, letra){
+          // return arr.map(nombre => nombre.includes(letra));
+          var i = 0;
+           arr.forEach(nombre => {
+            if(nombre.includes(letra)){i++;}
+        });
+        return i;
+        }
+
+
+        // ret:array de nombres
+        function nombresQueComienzanPor(arr, letra){
+            //return arr.filter(nombre => nombre.startsWith(letra)); ESTA BIEN
+            return arr.filter(nombre => {
+                nombre.startsWith(letra)
+            
+            });
+        }
+
+        //ret: bool
+        function estaMiNombre(arr, nombre){
+            var existe = false;
+            arr.forEach(dato =>{
+                if(dato.match(nombre)){
+                  return existe = true;
+                }
+            });
+            return existe;
+        }
+
+         //ret: Número
+        function cuantasVecesApareceLaLetra(arr, letra){
+            var i = 0;
+            arr.forEach(dato =>{
+                if (dato.includes(letra)) {
+                    i++;
+                }
+            })
+            return i;
+        }
+
+
+
     </script>
 </body>
 </html>
