@@ -60,14 +60,20 @@
 
          //ret: Número
         function cuantasVecesApareceLaLetra(arr, letra){
-        var resultado = 0,veces = 0;
-        arr.forEach(dato =>{
-           if (dato.includes(letra) == true) {
-            veces = dato.match('/'+letra+'/g',"").length;
-            resultado += veces;
-           }
-        })
-        return resultado;
+        // var resultado = 0,veces = 0;
+            // arr.forEach(dato =>{
+            //    if (dato.includes(letra) == true) {
+            //     veces = dato.replace('/'+letra+'/g',"").length;
+            //     resultado += veces;
+            //    }
+            // })
+            // return resultado;
+
+               return arr
+                    .join('')
+                    .toUpperCase()
+                    .split('')
+                    .filter(ele => ele == letra.toUpperCase()).length;
         }
 
 
