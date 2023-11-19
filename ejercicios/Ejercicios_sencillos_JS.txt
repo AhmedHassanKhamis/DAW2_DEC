@@ -1,0 +1,48 @@
+Ejercicios sencillos JS:
+
+Desarrollar al menos 3 formas distintas de encontrar el valor más alto de un array
+numérico (enteros + y -) Implementa cada una de ellas en una función diferente
+***********************************************************************************
+-Mi solución: https://github.com/Christian-Gimenez/Ejercicios_2DAW/blob/main/JavaScript/EjercicioEncontrarElValorMasAlto.html
+***********************************************************************************
+
+
+Dadas dos matrices A y B intercambiar los mínimos de A con los máximos de B
+***********************************************************************************
+-Mi solución: https://github.com/Christian-Gimenez/Ejercicios_2DAW/blob/main/JavaScript/EjercicioMinA-MaxB.html
+***********************************************************************************
+
+
+Escribir una función que divida un array en grupos de un tamaño determinado y
+los devuelva en un array bidimensional. Ejemplo output:
+["a", "b", "c", "d"], 2 --> [["a", "b"],["c", "d"]]
+[0, 1, 2, 3, 4, 5], 3 --> [[0, 1, 2], [3, 4, 5]] 
+[0, 1, 2, 3, 4, 5], 2 --> [[0, 1], [2, 3], [4, 5]] 
+***********************************************************************************
+-Mi solución: https://github.com/Christian-Gimenez/Ejercicios_2DAW/blob/main/JavaScript/EjercicioDividirArrayEnGruposTam.html
+***********************************************************************************
+
+
+Mezclar de 3 en 3
+Leer los datos correspondientes a dos tablas de 12 elementos numéricos
+y mezclarlos en una tercera de la forma:
+3 de la tabla A, 3 de la B, otros 3 de la A, otros 3 de la B, etc...
+***********************************************************************************
+-Mi solución: https://github.com/Christian-Gimenez/Ejercicios_2DAW/blob/main/JavaScript/EjercicioArraysMezclarDe3En3.html
+***********************************************************************************
+
+
+Escribe una función que pueda devolver el valor más pequeño de un array numérico o el índice de ese valor. El segundo parámetro de la función dirá si debe devolver el valor ("v") o el índice ("i"). No uses métodos del objeto array.
+Se supone que el primer parámetro siempre será una matriz llena con al menos 1 número y sin duplicados. Se supone el segundo parámetro será una letra con uno de dos valores: 'v' 'i'
+***********************************************************************************
+-Mi solución: https://github.com/Christian-Gimenez/Ejercicios_2DAW/blob/main/JavaScript/EjercicioArrayDevolverValor-Indice.html
+***********************************************************************************
+
+Crea un programa que pida el límite inferior y superior de un intervalo.
+Si limInf > limSup -> intercambiar
+A continuación, se van pidiendo números enteros positivos hasta que se introduzca un número negativo. Al terminar se mostrará: cuántos están dentro del intervalo, cuántos están fuera y si se ha introducido algún número igual a alguno de los límites del intervalo.
+***********************************************************************************
+-Mi solución: https://github.com/Christian-Gimenez/Ejercicios_2DAW/blob/main/JavaScript/EjercicioIntervalos.html
+***********************************************************************************
+
+         

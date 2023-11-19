@@ -1,0 +1,6 @@
+Ejercicio Frutas:
+const frutas = ["platano", "fresa", "kiwi", "fresa", "melón", "manzana","manzana", "platano", "platano"]
+//Hacer un objeto de este array, cuya key sea la fruta y el valor el nºvcs que aparece la fruta
+***********************************************************************************
+-Mi solución: https://github.com/Christian-Gimenez/Ejercicios_2DAW/blob/main/JavaScript/Frutas_contar.html
+***********************************************************************************

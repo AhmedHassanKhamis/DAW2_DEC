@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    'use strict';
+
+// Escribe una función que pueda devolver el valor más pequeño de un array numérico o el índice 
+// de ese valor. El segundo parámetro de la función dirá si debe devolver el valor ("v") o
+// el índice ("i"). No uses métodos del objeto array.
+// Se supone que el primer parámetro siempre será una matriz llena con al menos 1 número 
+// y sin duplicados. Se supone el segundo parámetro será una letra con uno de dos valores: 'v' 'i'
+
+let array = [-32423,2,3,4,54,-7777777777777,5,523,52,35235,35,3];
+let opcion = prompt("¿valor(v),indice(i)?");
+
+function menor(array,opcion) {
+    if (opcion == 'i') {
+        return array.indexOf(Math.min(...array));
+    } else if(opcion == 'v') {
+        return Math.min(...array);
+    }else{
+        return 'mal';
+    }
+}
+
+alert(menor(array,opcion));
+
+</script>
+<body>
+    
+</body>
+</html>

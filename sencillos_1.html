@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+//Desarrollar al menos 3 formas distintas de encontrar el valor más alto de un array
+// numérico (enteros + y -) Implementa cada una de ellas en una función diferente
+'use strict'
+
+let array1 = [-123,100,3,73,5,43543,54,656,3231,133,4,5,6,7,7];
+
+function mayorConAuxiliar() {
+    let aux = 0;
+    for (let i = 0; i < array1.length; i++) {
+        if (array1[i] > aux) {
+            aux = array1[i];
+        }
+    }    
+    return aux
+}
+
+function comparador(a,b) {
+    return a - b;
+}
+
+function mayorConMetodoArrays() {
+    return array1.sort(comparador)[array1.length-1];
+}
+
+function mayorConMath() {
+    return Math.max(...array1);
+}
+
+
+alert(mayorConAuxiliar());
+
+
+</script>
+<body>
+    
+</body>
+</html>

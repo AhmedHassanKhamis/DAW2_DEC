@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    'use sctrict';
+//     Mezclar de 3 en 3
+// Leer los datos correspondientes a dos tablas de 12 elementos numéricos
+// y mezclarlos en una tercera de la forma:
+// 3 de la tabla A, 3 de la B, otros 3 de la A, otros 3 de la B, etc...
+//yo lo hare uno a uno tipo : 1 del A ,1 del B, y asi sucesivamente
+let array1 = [1,2,3,4,5];
+let array2 = [6,7,8,9,0];
+let arrayfinal = new Array(array1.length + array2.length);
+
+function intercalar() {
+let x=0,y=0;
+for (let i = 0; i < arrayfinal.length; i++) {
+    if (i%2==0) {
+        arrayfinal [i] = array1[x];
+        x++;
+    }else{
+        arrayfinal [i] = array2[y];
+        y++;
+    }
+}   
+}
+
+intercalar();
+alert(arrayfinal);
+
+</script>
+<body>
+    
+</body>
+</html>
