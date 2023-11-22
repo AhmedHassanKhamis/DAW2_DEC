@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const sitios = `Google|https://www.google.es||DuckDuckGo|https://duckduckgo.com||YouTube|https://www.youtube.es||Wikipedia|https://www.wikipedia.org || | || | |`
+        // funcion que se ejecuta sola sin llamarla sin nombre
+        // (function(){
+        objetos = datos2objs(sitios, "||", "|");
+
+
+        function datos2objs(datos, sepReg='\n',sepCmp=';'){
+            const propsObjs = ['sitio','Direccion'];
+            
+            return arrays2Objs(datos2Array(),propsObjs);
+            //1- Datos --> array de arrays
+            //2- array --> array de objetos
+
+            function datos2Array() {
+                return datos
+                        .split(sepReg)
+                        .filter(reg => reg.trim())
+                        .map(reg => reg.split(sepCmp)
+                            .filter(camp => camp.trim()))
+                        .filter(reg => reg.length==2)
+            }
+
+// [
+// [n:g,d:htt...]
+// [n:g,d:htt...]
+// [n:g,d:htt...]
+// [n:g,d:htt...]
+// ]
+            function arrays2Objs(array, propsObjs){
+                array
+                    .reduce((acc, ele) => aObj(ele,propsObjs),{})
+            }
+
+            function aObj(arr,prop){
+                const obj = {};
+                arr.forEach((v,i) => obj[prop[i]] = e[i]);
+                return obj;
+            }
+        }
+
+        function objetos2HTMLElements(objetos) {
+            const div = document.createElement('div');
+            const keys = object.keys(objetos[0]);
+            objetos.forEach(obj => {
+                const a = document.createElement('a');
+                const span = document.createElement('span');
+                a.setAttribute('href',"#"); // "href",keys[1]
+                const atext = document.createTextNode(obj[keys[0]])
+            })
+        }
+
+        // })();
+
+
+
+
+    </script>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <!-- Estructura:
+        div
+            a href=#
+            span  
+    -->
+</body>
+</html>
