@@ -1,71 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            & div {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+
+                & a {
+                    font-size: 2em;
+                }
+
+                & span {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    </style>
     <script>
-        const sitios = `Google|https://www.google.es||DuckDuckGo|https://duckduckgo.com||YouTube|https://www.youtube.es||Wikipedia|https://www.wikipedia.org || | || | |`
+        'use strict';
+        const sitios = `Google|https://www.google.es||DuckDuckGo|https://duckduckgo.com||YouTube|https://www.youtube.es||Wikipedia|https://www.wikipedia.org || | || | |`;
         // funcion que se ejecuta sola sin llamarla sin nombre
-        // (function(){
-        objetos = datos2objs(sitios, "||", "|");
 
 
-        function datos2objs(datos, sepReg='\n',sepCmp=';'){
-            const propsObjs = ['sitio','Direccion'];
-            
-            return arrays2Objs(datos2Array(),propsObjs);
-            //1- Datos --> array de arrays
-            //2- array --> array de objetos
+        const obj = {};
+         const fret = (function (obj) {
 
-            function datos2Array() {
-                return datos
+
+            // document.addEventListener('DOMContentLoaded', () => {
+            //     document.body.appendChild(contHTML);
+            // })
+
+            const objetos = datos2objs(sitios, "||", "|");
+            const contHTML = objetos2HTMLElements(objetos);
+
+           // return aniadirHTML;
+            obj.aniadirHTML = aniadirHTML;
+
+            function aniadirHTML() {
+                document.body.appendChild(contHTML);
+            }
+
+            function datos2objs(datos, sepReg = '\n', sepCmp = ';') {
+                const propsObjs = ['sitio', 'Direccion'];
+
+                return arrays2Objs(datos2Array(), propsObjs);
+                //1- Datos --> array de arrays
+                //2- array --> array de objetos
+
+                function datos2Array() {
+                    return datos
                         .split(sepReg)
                         .filter(reg => reg.trim())
                         .map(reg => reg.split(sepCmp)
                             .filter(camp => camp.trim()))
-                        .filter(reg => reg.length==2)
+                        .filter(reg => reg.length == 2)
+                }
+
+                // [
+                // [n:g,d:htt...]
+                // [n:g,d:htt...]
+                // [n:g,d:htt...]
+                // [n:g,d:htt...]
+                // ]
+                function arrays2Objs(array, propsObjs) {
+                    return array
+                        .reduce((acc, ele) => {
+                            acc.push(aObj(ele, propsObjs));
+                            return acc
+                        }, [])
+
+                }
+
+                function aObj(arr, prop) {
+                    const obj = {};
+                    arr.forEach((v, i) => obj[prop[i]] = v);
+                    return obj;
+                }
             }
 
-// [
-// [n:g,d:htt...]
-// [n:g,d:htt...]
-// [n:g,d:htt...]
-// [n:g,d:htt...]
-// ]
-            function arrays2Objs(array, propsObjs){
-                array
-                    .reduce((acc, ele) => aObj(ele,propsObjs),{})
+            function objetos2HTMLElements(objetos) {
+
+                const div = document.createElement('div');
+                const keys = Object.keys(objetos[0]);
+
+                objetos.forEach(obj => {
+                    const a = document.createElement('a');
+                    const span = document.createElement('span');
+
+                    a.setAttribute('href', obj[keys[1]]); // "href",obj[keys[1]] /o/ '#'
+
+                    const txtA = document.createTextNode(obj[keys[0]]);
+                    const txtS = document.createTextNode('Visitado 0 veces.');
+
+                    a.addEventListener('click', gestionarClick);
+
+                    a.appendChild(txtA);
+                    span.appendChild(txtS);
+                    div.appendChild(a);
+                    div.appendChild(span);
+                })
+
+                return div;
             }
 
-            function aObj(arr,prop){
-                const obj = {};
-                arr.forEach((v,i) => obj[prop[i]] = e[i]);
-                return obj;
+
+            function gestionarClick(evt) {
+                evt.preventDefault();
+                const contSpan = evt.target.nextElementSibling.innerText;
+                const array = contSpan.split(' ');
+                array[1] = Number(array[1]) + 1;
+                // array[2] = array[1] == 1 ? 'vez.':'veces.';
+                array[2] = array[1] == 1 && 'vez.' || 'veces.';
+                evt.target.nextElementSibling.innerText = array.join(' ');
+
             }
-        }
-
-        function objetos2HTMLElements(objetos) {
-            const div = document.createElement('div');
-            const keys = object.keys(objetos[0]);
-            objetos.forEach(obj => {
-                const a = document.createElement('a');
-                const span = document.createElement('span');
-                a.setAttribute('href',"#"); // "href",keys[1]
-                const atext = document.createTextNode(obj[keys[0]])
-            })
-        }
-
-        // })();
+        })(obj);
 
 
 
 
     </script>
-    <style>
-       
-    </style>
 </head>
+
 <body>
     <!-- Estructura:
         div
@@ -73,4 +135,8 @@
             span  
     -->
 </body>
+<script>
+    //fret();
+    obj.aniadirHTML();
+</script>
 </html>
