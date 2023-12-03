@@ -1,11 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<script>
+    'use strict';
+
+    // Ejercicio Frutas:
+    const frutas = ["platano", "fresa", "kiwi", "fresa", "melón", "manzana", "manzana", "platano", "platano"]
+    //Hacer un objeto de este array, cuya key sea la fruta y el valor el nºvcs que aparece la fruta
+
+    const objetoFrutas = frutas.reduce((acc, fruta) => {
+        let veces = 0;
+        frutas.forEach(v => {
+            if (v == fruta) {
+                veces++;
+            }
+        })
+        acc[fruta] = veces;
+        return acc
+    }, {})
+
+    // apartir de aqui yo lo complico porque me apetece para practicar dom y demas....jejejjej
+    // primero convertire el objeto de frutas en un array de objetos donde la clave es la fruta y el 
+    // valor es las veces que aparece,basicamente voy a fragmentar el objetoFrutas creado anteriormente
+    // luego de eso se tiene que crear una tabla apartir de el array nuevo con los objetos.
+    // la tabla se compone de: thead, tbody y tfoot, respectivamente seria la info, valores, el total
+
+
+    // ######## METODO GENERICO ##########
+    // function objeto2ArrayDeObjetos(objeto) {
+    //     let array = [];
+    //     for (let prop in objeto){
+    //         let obj = {};
+    //         obj[prop] = objeto[prop];
+    //         array.push(obj);
+    //     }
+    //     return array;
+    // }
+
+
+    function objeto2ArrayDeObjetos(objeto) {
+        let array = [];
+        for (let prop in objeto) {
+            let obj = {};
+            obj["fruta"] = prop;
+            obj["cantidad"] = objeto[prop];
+            array.push(obj);
+        }
+        return array;
+    }
+
+
+    let arrayObjetosFrutas = [];
+    arrayObjetosFrutas = objeto2ArrayDeObjetos(objetoFrutas);
+
+
+    function crearTabla(arrayObjetosFrutas) {
+
+        function extraerCabecera(obj) {
+            return Object.keys(obj);
+        }
+
+        let cabecera = extraerCabecera(arrayObjetosFrutas[0]);
+
+        function thead() {
+            let thead = crearNodo("thead");
+            let tr = crearNodo("tr");
+            for (let v in cabecera){
+                let th = crearNodo("th",cabecera[v]);
+                tr.appendChild(th);
+            }
+            thead.appendChild(tr);
+            return thead;
+        }
+
+
+        function tbody() {
+            let tbody = crearNodo("tbody");
+            arrayObjetosFrutas.forEach(v => {
+                let valores = Object.values(v);
+                let tr = crearNodo("tr");
+                let td = crearNodo("td",valores[0]);
+                let td2 = crearNodo("td",valores[1]);
+                tr.appendChild(td);
+                tr.appendChild(td2);
+                tbody.appendChild(tr);
+            })
+            return tbody;
+        }
+
+
+        function totalFrutas() {
+            let total = 0;
+            arrayObjetosFrutas.forEach(v => total += v["cantidad"]);
+            return total;
+        }
+
+        let total = totalFrutas();
+
+        function tfoot(total) {
+            let tfoot = crearNodo("tfoot");
+            let tr = crearNodo("tr");
+            let td = crearNodo("td","total:");
+            let td2 = crearNodo("td",total);
+            tr.appendChild(td);
+            tr.appendChild(td2);
+            tfoot.appendChild(tr);
+            return tfoot;
+        }
+
+        
+        let table = crearNodo("table");
+
+        table.appendChild(thead());
+        table.appendChild(tbody());
+        table.appendChild(tfoot(total));
+
+        table.setAttribute("style","border:medium dashed green;")
+        
+        let contenedor = document.getElementById("contenedor");
+        contenedor.appendChild(table);
+
+
+    }
+
+
+    function crearNodo(elemento, contenido = undefined) {
+        let ele = document.createElement(elemento);
+        if (contenido) {
+            let conte = document.createTextNode(contenido);
+            ele.appendChild(conte);
+        }
+        return ele;
+    }
+
+</script>
+
 <body>
-    
+    <div id="contenedor">
+
+    </div>
 </body>
+<script>
+        crearTabla(arrayObjetosFrutas);
+</script>
 </html>
