@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    'use strict';
+    const temperaturas = `
+    Fecha;Tmin;Tmax
+               
+    2023/10/20; 20; 33;
+    2023/10/21; 22; 30;
+    2023/10/22; 18; 28;
+    2023/10/23; 20; 30;
+
+    2023/10/24;; 35;
+    2023/10/25; 14; 20;
+    2023/10/26; 10; 15
+    2023/10/27; 10; 14;    
+    2023/10/28; 0; 14;   
+    `;
+
+    function csv2array(temperaturas) {
+        return temperaturas
+            .split('\n')
+            .map(fila => fila.trim())
+            .filter(fila => fila.length)
+            .map(fila => fila
+                .split(";")
+                .filter(campo => campo.length)
+                .map(campo => campo.trim()))
+            .filter(filas => filas.length == 3)
+    }
+    let temperaturasArray = csv2array(temperaturas);
+    let cabecera = temperaturasArray[0];
+    
+    function array2objs(array,cabecera) {
+        return array.reduce((acc, campo) => {
+            acc.push(convertirObjeto(campo,cabecera));
+            return acc;
+        }, [])
+    }
+
+    function convertirObjeto(campos,cabecera) {
+        let objeto = {};
+        campos.forEach((propiedad,i) => {
+            objeto[cabecera[i]] = propiedad;
+        });
+        return objeto;
+    }
+
+    let arrayconObjetos = array2objs(temperaturasArray,temperaturasArray[0]);
+
+    function crearNodo(elemento,elementoTxt) {
+        let ele = document.createElement(elemento);
+        if (elementoTxt) {
+            let eleTxt = document.createTextNode(elementoTxt);
+            ele.appendChild(eleTxt);
+        }
+        return ele;
+    }
+    // parte de crear la tabla
+
+    function crearTabla(arrayconObjetos) {
+
+        function crearthead(cabecera) {
+            let headtabla = crearNodo('thead');
+            let tr = crearNodo('tr')
+            for (let campo in cabecera){
+                let th = crearNodo('th',cabecera[campo]);
+                tr.appendChild(th);
+            }
+            headtabla.appendChild(tr);
+            return headtabla;
+        }
+
+
+        function creartbody() {
+            let bodytabla = crearNodo('tbody');
+            arrayconObjetos.forEach(objeto => {
+                let tr = crearNodo('tr');
+                for(let campo in objeto ){
+                    let td = crearNodo('td',objeto[campo]);
+                    tr.appendChild(td);
+                }
+                bodytabla.appendChild(tr);
+            })
+            return bodytabla;
+        }
+
+
+        function creartfoot() {
+            let footertabla = crearNodo('tfoot');
+            let tr = crearNodo('tr');
+            cabecera.forEach((campo,i) => {
+                let td = crearNodo('td',`total: ${cabecera[i]}`);
+                tr.appendChild(td);
+            })
+            footertabla.appendChild(tr);
+            return footertabla;
+        }
+        let tabla = crearNodo('table');
+        tabla.appendChild(crearthead(cabecera));
+        tabla.appendChild(creartbody());
+        tabla.appendChild(creartfoot());
+        tabla.setAttribute('align','center')
+
+        document.body.appendChild(tabla);
+    }
+
+   
+    
+
+    console.log(temperaturasArray);
+    console.log();
+</script>
+
+<body>
+
+</body>
+<script>
+    crearTabla(arrayconObjetos);   
+</script>
+</html>
