@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header></header>
+    <main></main>
+    <footer></footer>
+    <div class="contenedor">
+      <textarea name="nota" id="contenidoNota" cols="30" rows="10"></textarea>
+      <button id="btnGuardar">Almacenar Nota</button>
+      <h3>Notas</h3>
+      <hr>
+      <ol id="contenedorNotas"></ol>
+    </div>
+    <script>
+
+      class AppNotas {
+        static DB = "MisNotas";
+
+        constructor(selectorNota, selectorGuardar, selectorMostrar) {
+          this.nota = document.querySelector(selectorNota);
+          this.guardar = document.querySelector(selectorGuardar);
+          this.listar = document.querySelector(selectorMostrar);
+
+
+          this.guardar.addEventListener('click', () => this.guardarNota());
+
+          this.notas = JSON.parse(localStorage.getItem(AppNotas.DB)) ?? [];
+          this.listarNotas();
+        }
+
+        listarNotas() {
+          this.notas.forEach(nota => this.crearElementoNota(nota));
+        }
+
+        crearElementoNota(nota) {
+          const elemento = document.createElement('li');
+          const contenido = document.createTextNode(nota);
+          elemento.appendChild(contenido);
+          this.listar.appendChild(elemento);
+        }
+
+        guardarNota(e) {
+          const valor = this.nota.value.trim();
+          if (valor) {
+            this.notas.push(valor);
+            this.nota.value = "";
+            this.actualizarDB();
+            this.crearElementoNota(valor);
+          }
+        }
+
+        actualizarDB(){
+          localStorage.setItem(AppNotas.DB, JSON.stringify(this.notas));
+        }
+
+      }
+
+      new AppNotas('#contenidoNota','#btnGuardar','#contenedorNotas')
+
+    </script>
+  </body>
+  
+</html>
