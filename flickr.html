@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>
+        IP
+    </button>
+    <p>Tu IP publica es: <b><span></span></b></p>
+
+
+
+    <script>
+        const URL = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=imprimirIP";
+
+        document.querySelector("button").addEventListener('click', e => {
+            const script = document.createElement('script');
+            script.setAttribute("type", "application/javascript");
+            script.setAttribute("src", URL);
+
+            document.querySelector("head").appendChild(script);
+
+            // setTimeout(()=> script.parentElement.removeChild(script),0);
+            script.parentElement.removeChild(script);
+        })
+
+
+        function imprimirIP(datos) {
+            console.log(datos);
+            document.querySelector('p span').textContent = datos.ip;
+        }
+    </script>
+</body>
+</html>
