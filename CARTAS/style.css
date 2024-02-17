@@ -1,0 +1,28 @@
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.carta {
+    transform-style: preserve-3d;
+    transition: all 1.5s;
+    position: relative;
+    width: 226px;
+    height: 314px;
+}
+
+.girado {
+    transform: rotateX(180deg);
+}
+
+.carta > * {
+    backface-visibility: hidden;
+    position: absolute;
+    width: 226px;
+    height: 314px;
+}
+
+.carta > :last-child{
+    transform: rotateY(180deg);
+    border-radius: 10px;
+}

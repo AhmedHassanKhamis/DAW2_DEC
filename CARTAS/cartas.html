@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+    let cartas = [];
+
+    async function peticion(url, array) {
+        const datos = await fetch(url);
+        const json = await datos.json();
+        let variable = json;
+        Impimir(variable, array);
+    }
+
+    peticion("https://deckofcardsapi.com/api/deck/new/draw/?count=10", cartas);
+
+    function Impimir(variable, array) {
+        array = variable.cards;
+        array.forEach(element => {
+            cartas.push(element);
+        });
+    }
+
+    function construirCartas(array) {
+        let seleccion = document.getElementsByTagName("main");
+        array.forEach(carta => {
+            let imagen = document.createElement("img");
+            let dorso = document.createElement("img");
+            let contenedor = document.createElement("div");
+            let clase = document.createAttribute("class");
+            clase.value = "carta";
+            contenedor.setAttributeNode(clase);
+            let src = document.createAttribute("src");
+            let src2 = document.createAttribute("src");
+            src.value = carta.image;
+            src2.value = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROdQOON3P__LRi1PpyFl8NWYme_4fo3pAaog&usqp=CAU"
+            imagen.setAttributeNode(src);
+            dorso.setAttributeNode(src2);
+            contenedor.appendChild(dorso);
+            contenedor.appendChild(imagen);
+            contenedor.addEventListener('click', ((e) => {
+                e.currentTarget.classList.toggle("girado");
+            }))
+            seleccion[0].appendChild(contenedor);
+        })
+    }
+
+    function construirBaraja() {
+        document.body.insertAdjacentHTML("beforeend", "<main></main>");
+        construirCartas(cartas);
+        let boton = document.querySelector("button");
+        boton.parentElement.removeChild(boton);
+    }
+
+    window.onload = function() {
+        let boton = document.createElement("button");
+        let boton_texto = document.createTextNode("EMPEZAR BARAJA");
+        boton.appendChild(boton_texto);
+        boton.addEventListener('click',construirBaraja);
+        document.body.appendChild(boton);    
+    }
+    
+
+
+</script>
+
+<body>
+
+</body>
+
+</html>
