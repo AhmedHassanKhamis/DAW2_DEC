@@ -9,6 +9,8 @@
 </head>
 <script>
     let cartas = [];
+    tiempo = 30000;
+    let tiempo_contador = (tiempo / 1000);
 
     async function peticion(url, array) {
         const datos = await fetch(url);
@@ -25,6 +27,25 @@
             cartas.push(element);
         });
     }
+
+    function crearBoton() {
+        let cabecera = document.querySelector("header")
+        if (!cabecera) {
+            cabecera = document.createElement("header");
+        }
+        cabecera.innerHTML = `
+        <h2>CARTAS</h2>
+        <h5>Ahmed Hassan Khamis</h5>
+        <h6>00:${tiempo_contador}</h6>
+        `;
+        let boton = document.createElement("button");
+        let boton_texto = document.createTextNode("EMPEZAR JUEGO");
+        boton.appendChild(boton_texto);
+        boton.addEventListener('click', construirBaraja);
+        cabecera.appendChild(boton);
+        document.body.appendChild(cabecera);
+    }
+
 
     function construirCartas(array) {
         let seleccion = document.getElementsByTagName("main");
@@ -51,20 +72,79 @@
     }
 
     function construirBaraja() {
-        document.body.insertAdjacentHTML("beforeend", "<main></main>");
-        construirCartas(cartas);
+        let marcador = document.querySelector("ul");
+        if (marcador) {
+            ul.parentElement.removeChild(ul);
+        }
         let boton = document.querySelector("button");
         boton.parentElement.removeChild(boton);
+        document.body.insertAdjacentHTML("beforeend", "<main></main>");
+        construirCartas(cartas);
+        empezarContador();
     }
 
-    window.onload = function() {
-        let boton = document.createElement("button");
-        let boton_texto = document.createTextNode("EMPEZAR BARAJA");
-        boton.appendChild(boton_texto);
-        boton.addEventListener('click',construirBaraja);
-        document.body.appendChild(boton);    
+    function crearMarcador() {
+        let ul = document.createElement("ul");
+        for (let index = 0; index < localStorage.length; index++) {
+            let li = document.createElement("li");
+            li.innerText = localStorage.getItem(index);
+            ul.appendChild(li);
+        }
+        let header = document.querySelector("header");
+        header.appendChild(ul);
     }
-    
+
+    function crearFormulario() {
+        document.body.insertAdjacentHTML("afterend"
+            , `
+        <form id="NOMBRE">
+            <label for="nombre">Introduce tu nombre</label>
+            <input type="text" name="nombre" required />
+            <input type="submit" name="submit" value="GUARDAR 💾"/>
+        </form>
+        `);
+    }
+
+    function empezarContador() {
+        let cartas_eliminar = document.querySelector("main");
+        setTimeout(function () {
+            clearInterval(intervalo);
+            cartas_eliminar.remove();
+            crearMarcador();
+            crearFormulario();
+            async function rellenar_formulario() {
+                let promesa = new Promise(function (terminado, noterminado) {
+                    let enviado = document.querySelector("input[type='submit']");
+                    enviado.addEventListener("click", function () {
+                        let nombre = document.querySelector("input[type='text']").value;
+                        if (nombre) {
+                            usuario_numero = localStorage.length;
+                            localStorage.setItem(usuario_numero, nombre)
+                            terminado('listo');
+                        } else {
+                            throw new Error('No pusiste nombre');
+                            alert('no pusiste tu nombre');
+                        }
+                    })
+                })
+                await promesa;
+                crearBoton();
+            }
+            rellenar_formulario();
+        }, tiempo);
+        let h6 = document.querySelector("h6");
+        let intervalo =  setInterval(function () {
+            h6.innerText = `00:${tiempo_contador}`;
+            tiempo_contador--;
+        }, 1000);
+
+    }
+
+
+    window.onload = function () {
+        crearBoton();
+    }
+
 
 
 </script>

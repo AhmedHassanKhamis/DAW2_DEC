@@ -1,8 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 30px;
+    min-height: 100%;
+    background-image: radial-gradient(circle at 100% ,green,black);
+}
+
+header {
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    gap: 5px;
+}
+
+ul {
+    margin-top: 30px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+ul::before {
+    content: "------------------MARCADOR------------------";
+}
+
 main {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    width: 90%;
+    justify-content: center;
+    min-height: 100%;
 }
+main > * {
+    flex:1 1 auto
+}
+
 .carta {
     transform-style: preserve-3d;
     transition: all 1.5s;
@@ -25,4 +73,23 @@ main {
 .carta > :last-child{
     transform: rotateY(180deg);
     border-radius: 10px;
+}
+
+button {
+    padding: 5px;
+    background-color: green;
+    color: white;
+    margin: auto 0;
+}
+
+#NOMBRE {
+    width: fit-content;
+    padding: 10px;
+    margin: 40px auto;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgrey;
+    border-radius: 3px;
 }
