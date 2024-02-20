@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    const url = "https://restcountries.com/v3.1/name/";
+
+    document.addEventListener("DOMContentLoaded", function () {
+        app();
+    })
+
+    function app() {
+        crearFormulario();
+        gestorEvento();
+    }
+
+    function gestorEvento() {
+        let enviar = document.querySelector("input[type='submit']");
+        enviar.addEventListener("click", buscarbandera);
+    }
+
+    async function buscarbandera() {
+        let pais = document.querySelector("input[type='text']").value;
+        // PRIMERA FORMA 
+        // let xhr = new XMLHttpRequest();
+        // xhr.addEventListener('readystatechange',function(){
+        //     if (xhr.readyState == 4) {
+        //         if (xhr.status >= 200 && xhr.status <= 300) {
+        //             let respuesta = JSON.parse(xhr.responseText);
+        //             crearBandera(respuesta);
+        //         }else {
+        //             console.error(`Error: ${xhr.status} -> ${xhr.statusText}`);
+        //         }
+        //     }
+        // })
+        // xhr.open("get",url + pais, true);
+        // xhr.send();
+        // SEGUNDA FORMA
+        // fetch(url+pais)
+        //     .then(respuesta => respuesta.json())
+        //     .then(respuesta => crearBandera(respuesta))
+        //     .catch(respuesta => error(respuesta))
+        // TERCERA FORMA
+        try {
+            const peticion = await fetch(url + pais);
+            if (peticion.status >= 200 && peticion.status <= 300) {
+                const datos = await peticion.json();
+                crearBandera(datos);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function crearBandera(json) {
+        console.log(json);
+        document.body.appendChild(crearNodo("figure", null, [
+            crearNodo("img", { src: json[0].flags.png }),
+            crearNodo("figcaption", null, json[0].name.common)
+        ]))
+
+    }
+
+    function crearNodo(tipo, atributos = null, contenido = null) {
+        let elemento = document.createElement(tipo);
+
+        if (atributos) {
+            for (const atributo in atributos) {
+                elemento.setAttribute(atributo, atributos[atributo]);
+            }
+        }
+
+        if (typeof contenido == "string") {
+            elemento.innerText = contenido;
+        } else if (contenido instanceof HTMLElement) {
+            elemento.appendChild(contenido);
+        } else if (Array.isArray(contenido)) {
+            contenido.forEach(element => {
+                elemento.appendChild(element);
+            });
+        }
+
+        return elemento;
+    }
+
+    function crearFormulario() {
+        let form = crearNodo("form", null, [
+            crearNodo("input", { type: "text", name: "pais" }, null),
+            crearNodo("input", { type: "submit" }, null)
+        ]);
+        form.addEventListener("submit", function (evt) {
+            evt.preventDefault();
+        })
+        document.body.appendChild(form);
+        document.body.appendChild(crearNodo("br"));
+    }
+
+
+
+
+</script>
+
+<body>
+
+</body>
+
+</html>
