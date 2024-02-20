@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tiempo</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/datos.js"></script>
+  <script src="js/solucion.js"></script>
+</head>
+<body>
+  <main>
+    <h2>Tiempo - DWEC 2º Parcial</h2>
+    <div id="buscar">
+      <label for="intro">Ciudad o Id</label>
+      <!-- (1) -->
+      <input type="text" id="intro" name="intro" autofocus>
+      <!-- (2) -->
+      <button>Buscar</button>
+    </div>
+    <!-- (3) -->
+    <div id="info">
+      <!-- (4) en el id=act -->
+      <!-- 
+         El nombre de la imagen se forma con las tres primeras letras
+         del valor del campo cielo (en minúsculas) + la terminación svg
+      -->
+      <!-- Estructura html
+      <div>
+        <h2>Madrid</h2>
+        <h3>(España)</h3>
+        <p>Actualizado hace <span id="act">1</span> minuto(s)</p>
+      </div>
+      <div data-date="25/2/2021">
+      -->
+      <!-- (5) en vez de Hoy
+        <h3>Hoy</h3>
+        <img src="img/sol.svg" alt="estado">
+        <span>Soleado</span>
+        <p>Min: 1,6°</p>
+        <p>Max: 13,5°</p>
+      </div>
+      -->            
+    </div> 
+  </main>
+  <script>
+    tiempoApp.iniciar('http://172.26.132.100:3000');
+  </script>  
+</body>
+</html>
