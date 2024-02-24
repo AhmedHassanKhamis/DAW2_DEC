@@ -8,144 +8,196 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <script>
-    let cartas = [];
-    tiempo = 30000;
-    let tiempo_contador = (tiempo / 1000);
+    (function () {
+        'use strict'
 
-    async function peticion(url, array) {
-        const datos = await fetch(url);
-        const json = await datos.json();
-        let variable = json;
-        Impimir(variable, array);
-    }
-
-    peticion("https://deckofcardsapi.com/api/deck/new/draw/?count=10", cartas);
-
-    function Impimir(variable, array) {
-        array = variable.cards;
-        array.forEach(element => {
-            cartas.push(element);
-        });
-    }
-
-    function crearBoton() {
-        let cabecera = document.querySelector("header")
-        if (!cabecera) {
-            cabecera = document.createElement("header");
+        window.onload = function () {
+            crearComienzo();
         }
-        cabecera.innerHTML = `
-        <h2>CARTAS</h2>
-        <h5>Ahmed Hassan Khamis</h5>
-        <h6>00:${tiempo_contador}</h6>
-        `;
-        let boton = document.createElement("button");
-        let boton_texto = document.createTextNode("EMPEZAR JUEGO");
-        boton.appendChild(boton_texto);
-        boton.addEventListener('click', construirBaraja);
-        cabecera.appendChild(boton);
-        document.body.appendChild(cabecera);
-    }
 
-
-    function construirCartas(array) {
-        let seleccion = document.getElementsByTagName("main");
-        array.forEach(carta => {
-            let imagen = document.createElement("img");
-            let dorso = document.createElement("img");
-            let contenedor = document.createElement("div");
-            let clase = document.createAttribute("class");
-            clase.value = "carta";
-            contenedor.setAttributeNode(clase);
-            let src = document.createAttribute("src");
-            let src2 = document.createAttribute("src");
-            src.value = carta.image;
-            src2.value = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROdQOON3P__LRi1PpyFl8NWYme_4fo3pAaog&usqp=CAU"
-            imagen.setAttributeNode(src);
-            dorso.setAttributeNode(src2);
-            contenedor.appendChild(dorso);
-            contenedor.appendChild(imagen);
-            contenedor.addEventListener('click', ((e) => {
-                e.currentTarget.classList.toggle("girado");
-            }))
-            seleccion[0].appendChild(contenedor);
-        })
-    }
-
-    function construirBaraja() {
-        let marcador = document.querySelector("ul");
-        if (marcador) {
-            ul.parentElement.removeChild(ul);
+        function empezarPartida() {
+            apuestaJugador = document.querySelector("select").value;
+            console.log(apuestaJugador);
+            construirBaraja()
         }
-        let boton = document.querySelector("button");
-        boton.parentElement.removeChild(boton);
-        document.body.insertAdjacentHTML("beforeend", "<main></main>");
-        construirCartas(cartas);
-        empezarContador();
-    }
 
-    function crearMarcador() {
-        let ul = document.createElement("ul");
-        for (let index = 0; index < localStorage.length; index++) {
-            let li = document.createElement("li");
-            li.innerText = localStorage.getItem(index);
-            ul.appendChild(li);
-        }
-        let header = document.querySelector("header");
-        header.appendChild(ul);
-    }
-
-    function crearFormulario() {
-        document.body.insertAdjacentHTML("afterend"
-            , `
-        <form id="NOMBRE">
-            <label for="nombre">Introduce tu nombre</label>
-            <input type="text" name="nombre" required />
-            <input type="submit" name="submit" value="GUARDAR 💾"/>
-        </form>
-        `);
-    }
-
-    function empezarContador() {
-        let cartas_eliminar = document.querySelector("main");
-        setTimeout(function () {
-            clearInterval(intervalo);
+        function terminarPartida() {
+            mostrarResultado();
+            let cartas_eliminar = document.querySelector("main");
             cartas_eliminar.remove();
             crearMarcador();
             crearFormulario();
-            async function rellenar_formulario() {
-                let promesa = new Promise(function (terminado, noterminado) {
-                    let enviado = document.querySelector("input[type='submit']");
-                    enviado.addEventListener("click", function () {
-                        let nombre = document.querySelector("input[type='text']").value;
-                        if (nombre) {
-                            usuario_numero = localStorage.length;
-                            localStorage.setItem(usuario_numero, nombre)
-                            terminado('listo');
-                        } else {
-                            throw new Error('No pusiste nombre');
-                            alert('no pusiste tu nombre');
-                        }
-                    })
-                })
-                await promesa;
-                crearBoton();
-            }
             rellenar_formulario();
-        }, tiempo);
-        let h6 = document.querySelector("h6");
-        let intervalo =  setInterval(function () {
-            h6.innerText = `00:${tiempo_contador}`;
-            tiempo_contador--;
-        }, 1000);
+        }
 
-    }
+        let cartas = [];
+        let posibles = ["ACE", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"]
+        let acumulador = [];
+        let apuestaJugador = null;
+        let tiempo = 15000;
+        let tiempo_contador = null;
+        let victoria = false;
+
+        async function peticion(url, array) {
+            const datos = await fetch(url);
+            const json = await datos.json();
+            guardarCartas(json, array);
+            console.log(json)
+        }
+
+        function guardarCartas(variable, array) {
+            array = variable.cards;
+            array.forEach(element => {
+                cartas.push(element);
+            });
+        }
+
+        function crearComienzo() {
+            cartas = []
+            peticion("https://deckofcardsapi.com/api/deck/new/draw/?count=8", cartas);
+            tiempo_contador = (tiempo / 1000);
+            let cabecera = document.querySelector("header")
+            if (!cabecera) {
+                cabecera = document.createElement("header");
+            }
+            cabecera.innerHTML = `
+                <h2>CARTAS</h2>
+                <h5>Ahmed Hassan Khamis</h5>
+                <p>Tiempo (segundos):</p>
+                <h6>${tiempo_contador}</h6>
+            `;
+
+            let reglas = crearNodo("p", { style: "width:300px;border:1px solid white;border-radius:5px;padding:10px;" }, "Reglas:\nTienes que elegir el VALOR de una carta en el cuadro de seleccion, si al girar las cartas coincide con el numero apostado ganas!\n\nDISCLAIMER:NO ME HAGO RESPONSABLE DEL DESARROLLO DE EL SENTIDO LUDOPATA");
+            let apuesta = crearNodo("select", null,
+                posibles.map(ele => crearNodo("option", null, ele))
+            );
+            let boton = crearNodo("button", null, "Empezar Juego")
+            boton.addEventListener('click', empezarPartida);
+            cabecera.appendChild(reglas);
+            cabecera.appendChild(apuesta);
+            cabecera.appendChild(boton);
+            document.body.appendChild(cabecera);
+        }
 
 
-    window.onload = function () {
-        crearBoton();
-    }
+        function construirCartas(array) {
+            let seleccion = document.getElementsByTagName("main");
+            array.forEach(carta => {
+                let contenedor = crearNodo("div", { class: "carta","data-carta":carta.value }, [
+                    crearNodo("img", { src: "https://deckofcardsapi.com/static/img/back.png"}),
+                    crearNodo("img", { src: carta.image })
+                ]);
+                contenedor.addEventListener('click', ((e) => {
+                    e.currentTarget.classList.toggle("girado");
+                    comprobarVictoria(e.currentTarget.getAttribute("data-carta"));
+                }), { once: true })
+                seleccion[0].appendChild(contenedor);
+            })
+        }
+
+        function mostrarResultado() {
+            if (victoria == true) {
+                alert("HAS GANADO BRAVO!")
+            }else{
+                alert("HAS PERDIDO MALA SUERTE :(")
+            }
+        }
+
+        function comprobarVictoria(valor) {
+            if (valor == apuestaJugador) {
+                victoria = true;
+            }
+        }
+
+        function construirBaraja() {
+            let marcador = document.querySelector("ul");
+            if (marcador) {
+                ul.parentElement.removeChild(ul);
+            }
+
+            let selector = document.querySelector("select");
+            selector.parentElement.removeChild(selector.previousElementSibling);
+            selector.parentElement.removeChild(selector.nextElementSibling);
+            selector.parentElement.removeChild(selector);
+            document.body.insertAdjacentHTML("beforeend", "<main></main>");
+            construirCartas(cartas);
+            empezarContador();
+        }
+
+        function crearMarcador() {
+            let ul = document.createElement("ul");
+            for (let index = localStorage.length; index >= localStorage.length - 10; index--) {
+                let li = document.createElement("li");
+                li.innerText = localStorage.getItem(index);
+                ul.appendChild(li);
+            }
+            let header = document.querySelector("header");
+            header.appendChild(ul);
+        }
+
+        function crearFormulario() {
+            document.body.insertAdjacentHTML("afterend"
+                , `
+        <div id="NOMBRE">
+            <label for="nombre">Introduce tu nombre</label>
+            <input type="text" name="nombre" required />
+            <input type="submit" name="submit" value="GUARDAR 💾"/>
+        </div>
+        `);
+        }
+
+        function empezarContador() {
+            let h6 = document.querySelector("h6");
+            let intervalo = setInterval(function () {
+                tiempo_contador--;
+                h6.innerText = tiempo_contador;
+                if (tiempo_contador == 0) {
+                    clearInterval(intervalo);
+                    terminarPartida();
+                }
+            }, 1000);
+        }
 
 
+
+        async function rellenar_formulario() {
+            let promesa = new Promise(function () {
+                let enviado = document.querySelector("input[type='submit']");
+                enviado.addEventListener("click", function () {
+                    let nombre = document.querySelector("input[type='text']").value;
+                    if (nombre) {
+                        localStorage.setItem(localStorage.length, nombre);
+                        enviado.parentElement.remove();
+                        crearComienzo();
+                    } else {
+                        alert('no pusiste tu nombre');
+                        throw new Error('No pusiste nombre');
+                    }
+                })
+            })
+            await promesa;
+        }
+
+        function crearNodo(tipo, atributos = null, contenido = null) {
+            let elemento = document.createElement(tipo);
+            if (atributos) {
+                for (const atributo in atributos) {
+                    elemento.setAttribute(atributo, atributos[atributo]);
+                }
+            }
+            if (typeof contenido == "string") {
+                elemento.innerText = contenido;
+            } else if (contenido instanceof HTMLElement) {
+                elemento.appendChild(contenido);
+            } else if (Array.isArray(contenido)) {
+                contenido.forEach(ele => elemento.appendChild(ele));
+            }
+
+            return elemento;
+        }
+        
+
+    })()
 
 </script>
 
